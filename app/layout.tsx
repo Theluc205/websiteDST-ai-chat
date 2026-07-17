@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/assets/logo-dst-marketing-media.png",
+        url: "assets/logo-dst-marketing-media.png",
         width: 2048,
         height: 1152,
         alt: "DST Group Marketing & Media",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DST Group | Marketing, Media và Branding toàn diện",
     description,
-    images: ["/assets/logo-dst-marketing-media.png"],
+    images: ["assets/logo-dst-marketing-media.png"],
   },
 };
 
@@ -72,9 +72,9 @@ export default function RootLayout({
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="icon" href="/favicon.png" type="image/png" sizes="512x512" />
-        <link rel="shortcut icon" href="/favicon.png" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="icon" href="favicon.png" type="image/png" sizes="512x512" />
+        <link rel="shortcut icon" href="favicon.png" />
+        <link rel="apple-touch-icon" href="favicon.png" />
       </head>
       <body>
         {children}

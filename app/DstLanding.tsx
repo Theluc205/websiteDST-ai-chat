@@ -44,7 +44,7 @@ function scrollToSection(id: string) {
 }
 
 function BrandLogo({ variant = "group", className = "" }: { variant?: "group" | "media"; className?: string }) {
-  const src = variant === "media" ? "/assets/logo-dst-marketing-media.png" : "/assets/logo-dst-group.png";
+  const src = variant === "media" ? "assets/logo-dst-marketing-media.png" : "assets/logo-dst-group.png";
   const alt = variant === "media" ? "DST Marketing Media" : "DST Group - Dịch vụ tận tâm - Nâng tầm thương hiệu";
 
   return <img className={`brand-logo ${className}`} src={src} alt={alt} loading="eager" decoding="async" />;
@@ -383,7 +383,7 @@ export function DstLanding() {
 
         <section id="about" className="section split-section">
           <div className="media-panel reveal">
-            <img src="/assets/01-team-event-launch.jpg" alt="Đội ngũ DST trong một sự kiện ra mắt" loading="lazy" decoding="async" />
+            <img src="assets/01-team-event-launch.jpg" alt="Đội ngũ DST trong một sự kiện ra mắt" loading="lazy" decoding="async" />
             <div className="media-badge">
               <UsersIcon size={20} /> Chiến lược rõ ràng • Triển khai minh bạch
             </div>
