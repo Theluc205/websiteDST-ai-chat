@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 :root {
   --background: #f4f1ea;
@@ -114,19 +114,6 @@ img {
 .loader-done {
   opacity: 0;
   visibility: hidden;
-}
-
-.custom-cursor {
-  position: fixed;
-  left: -16px;
-  top: -16px;
-  z-index: 90;
-  width: 32px;
-  height: 32px;
-  pointer-events: none;
-  border: 1px solid rgba(224, 152, 64, 0.74);
-  border-radius: 999px;
-  transition: transform 0.04s linear;
 }
 
 .site-header {
@@ -383,19 +370,61 @@ h3 {
   min-height: 540px;
 }
 
-.hero-visual canvas,
-.logo-orb {
+.logo-orb,
+.brand-orbit,
+.brand-chip {
   position: absolute;
   inset: 0;
 }
 
 .logo-orb {
+  inset: 0;
   display: grid;
   place-items: center;
   padding: 13%;
   transform: perspective(1100px) rotateY(-7deg) rotateX(4deg);
 }
 
+
+.brand-orbit {
+  left: 50%;
+  top: 50%;
+  border: 1px solid rgba(224, 152, 64, 0.28);
+  border-radius: 999px;
+  transform: translate(-50%, -50%) rotate(-12deg);
+}
+
+.brand-orbit-one {
+  width: min(450px, 86%);
+  aspect-ratio: 1;
+}
+
+.brand-orbit-two {
+  width: min(560px, 98%);
+  aspect-ratio: 1;
+  border-color: rgba(48, 88, 88, 0.2);
+  transform: translate(-50%, -50%) rotate(18deg) scaleY(0.72);
+}
+
+.brand-chip {
+  width: 54px;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  opacity: 0.82;
+  transform: rotate(18deg);
+}
+
+.chip-gold {
+  left: 15%;
+  top: 28%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+}
+
+.chip-teal {
+  right: 13%;
+  bottom: 24%;
+  background: linear-gradient(135deg, var(--teal), var(--teal-soft));
+}
 .logo-orb .brand-logo {
   width: min(520px, 92%);
   padding: clamp(14px, 2.4vw, 26px);
@@ -1142,11 +1171,10 @@ textarea:focus {
 }
 
 .modal-body.no-proof-image {
-  grid-template-columns: 0.78fr 1fr;
+  grid-template-columns: 1fr;
 }
 
 .service-proof,
-.proof-note,
 .modal-detail-grid section {
   border: 1px solid rgba(48, 88, 88, 0.14);
   border-radius: 22px;
@@ -1166,33 +1194,13 @@ textarea:focus {
   object-fit: cover;
 }
 
-.service-proof figcaption,
-.proof-note p {
+.service-proof figcaption {
   margin: 0;
   padding: 16px;
   color: var(--ink-soft);
   line-height: 1.62;
 }
 
-.proof-note {
-  display: grid;
-  align-content: center;
-  min-height: 260px;
-  padding: 24px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(228, 238, 238, 0.78)),
-    var(--teal-soft);
-}
-
-.proof-note strong {
-  display: block;
-  color: var(--teal);
-  font-size: 1.12rem;
-}
-
-.proof-note p {
-  padding: 12px 0 0;
-}
 
 .modal-detail-grid {
   display: grid;
@@ -1343,11 +1351,7 @@ textarea:focus {
 }
 
 @media (max-width: 700px) {
-  .custom-cursor {
-    display: none;
-  }
-
-  .site-header {
+    .site-header {
     top: 10px;
     width: calc(100% - 20px);
     min-height: 62px;
@@ -1469,3 +1473,6 @@ textarea:focus {
     transition-duration: 0.001ms !important;
   }
 }
+
+
+
