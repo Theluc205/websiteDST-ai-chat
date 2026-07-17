@@ -21,7 +21,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--ink);
-  --font-sans: "Inter", "Segoe UI", Arial, Helvetica, sans-serif;
+  --font-sans: Arial, "Segoe UI", Tahoma, sans-serif;
 }
 
 * {
@@ -41,7 +41,9 @@ body {
     radial-gradient(circle at 6% 32%, rgba(48, 88, 88, 0.16), transparent 30rem),
     linear-gradient(180deg, #fffaf0 0%, #f4f1ea 44%, #edf3f1 100%);
   color: var(--ink);
-  font-family: "Inter", "Segoe UI", Arial, Helvetica, sans-serif;
+  font-family: Arial, "Segoe UI", Tahoma, sans-serif;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
 }
 
 body::before {
@@ -196,20 +198,20 @@ img {
   color: #1b1205;
   background: linear-gradient(135deg, var(--gold), #ffd177);
   box-shadow: 0 12px 26px rgba(224, 152, 64, 0.24);
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .ghost-btn {
   border: 1px solid rgba(48, 88, 88, 0.18);
   background: rgba(255, 255, 255, 0.56);
   color: var(--teal-deep);
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .dark-btn {
   color: #fff8ed;
   background: var(--teal-deep);
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .header-cta:hover,
@@ -253,7 +255,7 @@ img {
   background: transparent;
   text-align: left;
   font-size: 1.05rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .hero-section {
@@ -285,7 +287,7 @@ img {
   margin: 0 0 14px;
   color: var(--gold);
   font-size: 0.78rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -305,8 +307,8 @@ h1 {
   max-width: 620px;
   margin-bottom: 22px;
   font-size: clamp(2.65rem, 4.4vw, 5rem);
-  line-height: 1.03;
-  font-weight: 900;
+  line-height: 1.12;
+  font-weight: 800;
   letter-spacing: 0;
 }
 
@@ -318,14 +320,14 @@ h2 span {
 h2 {
   margin-bottom: 18px;
   font-size: clamp(2rem, 3vw, 3.25rem);
-  line-height: 1.08;
-  font-weight: 900;
+  line-height: 1.16;
+  font-weight: 800;
   letter-spacing: 0;
 }
 
 h3 {
   font-size: 1.08rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .hero-desc,
@@ -350,7 +352,7 @@ h3 {
   max-width: 100%;
   color: var(--teal);
   font-size: 0.84rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .hero-metrics span {
@@ -444,7 +446,7 @@ h3 {
   background: rgba(255, 250, 240, 0.84);
   color: #875315;
   font-size: 0.75rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .orbit-label-top {
@@ -491,7 +493,7 @@ h3 {
 .logo-cloud span {
   color: var(--teal);
   font-size: clamp(0.98rem, 1.6vw, 1.2rem);
-  font-weight: 900;
+  font-weight: 700;
   white-space: nowrap;
 }
 
@@ -536,7 +538,7 @@ h3 {
   background: rgba(255, 250, 240, 0.86);
   color: var(--teal-deep);
   backdrop-filter: blur(12px);
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .stats-grid {
@@ -575,7 +577,7 @@ h3 {
 
 .highlight-line {
   color: var(--teal);
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .section-heading {
@@ -640,7 +642,7 @@ h3 {
   margin-bottom: 20px;
   color: rgba(224, 152, 64, 0.68);
   font-size: 0.82rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .service-icon {
@@ -670,7 +672,7 @@ h3 {
   gap: 8px;
   background: transparent;
   color: var(--teal);
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .package-section {
@@ -757,7 +759,7 @@ h3 {
   margin-bottom: 18px;
   color: var(--gold);
   font-size: 1.55rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .reason-grid {
@@ -825,7 +827,7 @@ h3 {
 .project-overlay span {
   color: var(--gold-soft);
   font-size: 0.8rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .project-overlay p,
@@ -947,7 +949,7 @@ h3 {
   align-items: center;
   margin-top: 14px;
   color: var(--teal-deep);
-  font-weight: 800;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -962,7 +964,7 @@ label {
   gap: 8px;
   color: var(--teal-deep);
   font-size: 0.92rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 input,
@@ -1024,7 +1026,7 @@ textarea:focus {
 .success-message {
   margin: 14px 0 0;
   color: var(--teal);
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .site-footer {
@@ -1084,7 +1086,7 @@ textarea:focus {
   text-decoration: none;
   backdrop-filter: blur(12px);
   font-size: 0.78rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .modal-open {
