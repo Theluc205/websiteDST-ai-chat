@@ -4,7 +4,7 @@ import path from "node:path";
 
 export default defineConfig({
   root: import.meta.dirname,
-  base: "/websiteDST/",
+  base: "/websiteDST-ai-chat/",
   plugins: [react()],
   publicDir: path.resolve(import.meta.dirname, "../public"),
   build: {
