@@ -75,6 +75,12 @@ export default function RootLayout({
         <link rel="icon" href="favicon.png" type="image/png" sizes="512x512" />
         <link rel="shortcut icon" href="favicon.png" />
         <link rel="apple-touch-icon" href="favicon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Source+Sans+3:wght@400;600;700&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body>
         {children}

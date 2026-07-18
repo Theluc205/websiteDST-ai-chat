@@ -12,7 +12,15 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import { FormEvent, MouseEvent, useEffect, useState } from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "motion/react";
+import { FormEvent, MouseEvent, ReactNode, useEffect, useState } from "react";
 import {
   CheckIcon,
   clientLogos,
@@ -50,19 +58,148 @@ function BrandLogo({ variant = "group", className = "" }: { variant?: "group" | 
   return <img className={`brand-logo ${className}`} src={src} alt={alt} loading="eager" decoding="async" />;
 }
 
-function HeroScene() {
+function useTilt3D(strength = 10) {
+  const reduce = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const spring = { stiffness: 180, damping: 22, mass: 0.6 };
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [strength, -strength]), spring);
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-strength, strength]), spring);
+  const glareX = useTransform(x, [-0.5, 0.5], [0, 100]);
+  const glareY = useTransform(y, [-0.5, 0.5], [0, 100]);
+  const glare = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.18), transparent 42%)`;
+
+  function onMove(event: MouseEvent<HTMLElement>) {
+    if (reduce) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    x.set((event.clientX - rect.left) / rect.width - 0.5);
+    y.set((event.clientY - rect.top) / rect.height - 0.5);
+  }
+
+  function onLeave() {
+    x.set(0);
+    y.set(0);
+  }
+
+  return { reduce, rotateX, rotateY, glare, onMove, onLeave };
+}
+
+function Tilt3DCard({
+  className,
+  children,
+  delay = 0,
+  strength = 6,
+}: {
+  className: string;
+  children: ReactNode;
+  delay?: number;
+  strength?: number;
+}) {
+  const { reduce, rotateX, rotateY, glare, onMove, onLeave } = useTilt3D(strength);
+
   return (
-    <div className="hero-visual" aria-label="Logo DST trong không gian nhận diện">
-      <div className="brand-orbit brand-orbit-one" />
-      <div className="brand-orbit brand-orbit-two" />
-      <div className="brand-chip chip-gold" />
-      <div className="brand-chip chip-teal" />
-      <div className="logo-orb">
+    <motion.article
+      className={`${className} tilt-3d`}
+      style={
+        reduce
+          ? undefined
+          : {
+              rotateX,
+              rotateY,
+              transformPerspective: 1200,
+              transformStyle: "preserve-3d",
+            }
+      }
+      initial={reduce ? false : { opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={reduce ? undefined : { y: -6, transition: { type: "spring", stiffness: 280, damping: 22 } }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+    >
+      {!reduce ? <motion.span className="tilt-glare" style={{ background: glare }} aria-hidden="true" /> : null}
+      <div className="tilt-3d-content">{children}</div>
+    </motion.article>
+  );
+}
+
+function HeroScene() {
+  const reduce = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const spring = { stiffness: 120, damping: 18, mass: 0.5 };
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), spring);
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-12, 12]), spring);
+  const layerSlowX = useSpring(useTransform(x, [-0.5, 0.5], [-18, 18]), spring);
+  const layerSlowY = useSpring(useTransform(y, [-0.5, 0.5], [-12, 12]), spring);
+  const layerFastX = useSpring(useTransform(x, [-0.5, 0.5], [-34, 34]), spring);
+  const layerFastY = useSpring(useTransform(y, [-0.5, 0.5], [-22, 22]), spring);
+
+  function onMove(event: MouseEvent<HTMLDivElement>) {
+    if (reduce) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    x.set((event.clientX - rect.left) / rect.width - 0.5);
+    y.set((event.clientY - rect.top) / rect.height - 0.5);
+  }
+
+  function onLeave() {
+    x.set(0);
+    y.set(0);
+  }
+
+  return (
+    <motion.div
+      className="hero-visual"
+      aria-label="Logo DST trong không gian nhận diện"
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      initial={reduce ? false : { opacity: 0, rotateY: -16, z: -40 }}
+      animate={{ opacity: 1, rotateY: 0, z: 0 }}
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+      style={{ transformStyle: "preserve-3d", transformPerspective: 1400 }}
+    >
+      <motion.div
+        className="hero-orb hero-orb-coral"
+        aria-hidden="true"
+        style={reduce ? undefined : { x: layerSlowX, y: layerSlowY }}
+      />
+      <motion.div
+        className="hero-orb hero-orb-seafoam"
+        aria-hidden="true"
+        style={reduce ? undefined : { x: layerFastX, y: layerFastY }}
+      />
+      <motion.div className="brand-orbit brand-orbit-one" style={reduce ? undefined : { x: layerSlowX, y: layerSlowY }} />
+      <motion.div className="brand-orbit brand-orbit-two" style={reduce ? undefined : { x: layerFastX, y: layerFastY }} />
+      <motion.div className="brand-chip chip-gold" style={reduce ? undefined : { x: layerFastX, y: layerSlowY }} />
+      <motion.div className="brand-chip chip-teal" style={reduce ? undefined : { x: layerSlowX, y: layerFastY }} />
+      <motion.div
+        className="logo-orb"
+        style={
+          reduce
+            ? undefined
+            : {
+                rotateX,
+                rotateY,
+                transformPerspective: 1200,
+                transformStyle: "preserve-3d",
+              }
+        }
+        animate={reduce ? undefined : { y: [0, -5, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      >
         <BrandLogo variant="media" />
-      </div>
-      <div className="orbit-label orbit-label-top">ADS</div>
-      <div className="orbit-label orbit-label-bottom">BRANDING</div>
-    </div>
+      </motion.div>
+      <motion.div className="orbit-label orbit-label-top" style={reduce ? undefined : { x: layerFastX, y: layerSlowY }}>
+        ADS
+      </motion.div>
+      <motion.div
+        className="orbit-label orbit-label-bottom"
+        style={reduce ? undefined : { x: layerSlowX, y: layerFastY }}
+      >
+        BRANDING
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -232,10 +369,16 @@ export function DstLanding() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
+  const [headerScrolled, setHeaderScrolled] = useState(false);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     const loadTimer = window.setTimeout(() => setLoaded(true), 550);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const onScroll = () => setHeaderScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -277,26 +420,11 @@ export function DstLanding() {
     document.querySelectorAll("[data-count]").forEach((element) => countObserver.observe(element));
     return () => {
       window.clearTimeout(loadTimer);
+      window.removeEventListener("scroll", onScroll);
       observer.disconnect();
       countObserver.disconnect();
     };
   }, []);
-
-  function handleTilt(event: MouseEvent<HTMLElement>) {
-    const card = event.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    card.style.setProperty("--mx", `${x}px`);
-    card.style.setProperty("--my", `${y}px`);
-    card.style.setProperty("--rx", `${-(y / rect.height - 0.5) * 4}deg`);
-    card.style.setProperty("--ry", `${(x / rect.width - 0.5) * 4}deg`);
-  }
-
-  function clearTilt(event: MouseEvent<HTMLElement>) {
-    event.currentTarget.style.setProperty("--rx", "0deg");
-    event.currentTarget.style.setProperty("--ry", "0deg");
-  }
 
   return (
     <>
@@ -305,7 +433,7 @@ export function DstLanding() {
         <span>Dịch vụ tận tâm - Nâng tầm thương hiệu</span>
       </div>
 
-      <header className="site-header">
+      <header className={`site-header${headerScrolled ? " is-scrolled" : ""}`}>
         <button className="brand" onClick={() => scrollToSection("home")} aria-label="Về đầu trang">
           <BrandLogo />
         </button>
@@ -344,7 +472,13 @@ export function DstLanding() {
       <main>
         <section id="home" className="hero-section">
           <div className="ambient-grid" />
-          <div className="hero-copy reveal">
+          <motion.div
+            className="hero-copy"
+            initial={reduce ? false : { opacity: 0, y: 28, rotateX: 8 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            style={{ transformPerspective: 900 }}
+          >
             <p className="eyebrow">MARKETING • MEDIA • BRANDING</p>
             <h1>
               Marketing đúng hướng, thương hiệu <span>tăng trưởng</span>
@@ -366,7 +500,7 @@ export function DstLanding() {
                 <Zap size={18} /> ADS • TIKTOK SHOP • DESIGN • MEDIA • CONTENT • BRANDING
               </span>
             </div>
-          </div>
+          </motion.div>
           <HeroScene />
           <button className="scroll-cue" onClick={() => scrollToSection("about")} aria-label="Cuộn xuống phần giới thiệu">
             <Mouse size={18} />
@@ -420,14 +554,11 @@ export function DstLanding() {
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <article
-                  className="service-card reveal"
-                  key={service.title}
-                  onMouseMove={handleTilt}
-                  onMouseLeave={clearTilt}
-                >
+                <Tilt3DCard className="service-card" key={service.title} delay={index * 0.05} strength={5}>
                   <span className="card-number">{String(index + 1).padStart(2, "0")}</span>
-                  <Icon className="service-icon" size={30} />
+                  <div className="service-icon-wrap">
+                    <Icon className="service-icon" size={28} />
+                  </div>
                   <h3>{service.title}</h3>
                   <p>{service.text}</p>
                   <div className="tag-list">
@@ -438,7 +569,7 @@ export function DstLanding() {
                   <button onClick={() => setSelectedService(service)}>
                     Xem chi tiết <ArrowUpRight size={16} />
                   </button>
-                </article>
+                </Tilt3DCard>
               );
             })}
           </div>
@@ -455,10 +586,10 @@ export function DstLanding() {
             </button>
           </div>
           <div className="package-grid">
-            {packageGroups.map((group) => {
+            {packageGroups.map((group, index) => {
               const Icon = group.icon;
               return (
-                <article className="package-card reveal" key={group.title}>
+                <Tilt3DCard className="package-card" key={group.title} delay={index * 0.07} strength={5}>
                   <Icon size={26} />
                   <h3>{group.title}</h3>
                   {group.items.map((item) => (
@@ -466,7 +597,7 @@ export function DstLanding() {
                       <CheckIcon size={16} /> {item}
                     </p>
                   ))}
-                </article>
+                </Tilt3DCard>
               );
             })}
           </div>
@@ -481,12 +612,19 @@ export function DstLanding() {
             <div className="timeline-line">
               <span />
             </div>
-            {processSteps.map(([step, title, Icon]) => (
-              <article className="process-item reveal" key={step}>
+            {processSteps.map(([step, title, Icon], index) => (
+              <motion.article
+                className="process-item"
+                key={step}
+                initial={reduce ? false : { opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: index * 0.05, duration: 0.4 }}
+              >
                 <div className="step-index">{step}</div>
                 <Icon size={24} />
                 <h3>{title}</h3>
-              </article>
+              </motion.article>
             ))}
           </div>
         </section>
@@ -497,11 +635,18 @@ export function DstLanding() {
             <h2>Đối tác tăng trưởng đáng tin cậy</h2>
           </div>
           <div className="reason-grid">
-            {reasons.map((reason) => (
-              <article className="reason-card reveal" key={reason}>
+            {reasons.map((reason, index) => (
+              <motion.article
+                className="reason-card"
+                key={reason}
+                initial={reduce ? false : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: index * 0.06, duration: 0.4 }}
+              >
                 <CheckIcon size={22} />
                 <p>{reason}</p>
-              </article>
+              </motion.article>
             ))}
           </div>
         </section>
@@ -512,8 +657,15 @@ export function DstLanding() {
             <h2>Dấu ấn triển khai</h2>
           </div>
           <div className="project-rail">
-            {projects.map((project) => (
-              <article className="project-card reveal" key={project.title}>
+            {projects.map((project, index) => (
+              <motion.article
+                className="project-card"
+                key={project.title}
+                initial={reduce ? false : { opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: index * 0.08, duration: 0.5 }}
+              >
                 <img src={project.img} alt={project.title} loading="lazy" decoding="async" />
                 <div className="project-overlay">
                   <span>{project.type}</span>
@@ -521,7 +673,7 @@ export function DstLanding() {
                   <p>{project.goal}</p>
                   <strong>{project.result}</strong>
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
         </section>
@@ -537,18 +689,25 @@ export function DstLanding() {
             ))}
           </div>
           <div className="testimonial-grid">
-            {testimonials.map((item) => (
-              <article className="testimonial-card reveal" key={item.name}>
+            {testimonials.map((item, index) => (
+              <motion.article
+                className="testimonial-card"
+                key={item.name}
+                initial={reduce ? false : { opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: index * 0.08, duration: 0.45 }}
+              >
                 <img src={item.img} alt={item.name} loading="lazy" decoding="async" />
                 <div className="stars" aria-label="5 sao">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star key={index} size={15} fill="currentColor" />
+                  {Array.from({ length: 5 }).map((_, starIndex) => (
+                    <Star key={starIndex} size={15} fill="currentColor" />
                   ))}
                 </div>
                 <p>"{item.quote}"</p>
                 <strong>{item.name}</strong>
                 <span>{item.role}</span>
-              </article>
+              </motion.article>
             ))}
           </div>
         </section>
