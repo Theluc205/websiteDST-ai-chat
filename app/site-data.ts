@@ -55,7 +55,7 @@ export const services = [
     fit: "Phù hợp với doanh nghiệp đã có sản phẩm, website/fanpage hoặc kênh bán hàng và cần tăng trưởng bằng quảng cáo có kiểm soát.",
     deliverables: ["Kế hoạch kênh và ngân sách", "Thông điệp quảng cáo", "Thiết lập tracking cơ bản", "Báo cáo hiệu quả định kỳ"],
     proofNote:
-      "Không dùng ảnh minh họa cho hạng mục này vì hiệu quả quảng cáo nên được chứng minh bằng dữ liệu chiến dịch, dashboard và báo cáo thực tế.",
+      "Mỗi chiến dịch được vận hành theo chu trình đo lường, phân tích dữ liệu, tối ưu ngân sách và báo cáo định kỳ để doanh nghiệp theo dõi hiệu quả rõ ràng.",
   },
   {
     slug: "tiktok-shop",
@@ -69,7 +69,7 @@ export const services = [
     deliverables: ["Checklist setup gian hàng", "Kịch bản livestream", "Lịch nội dung TikTok", "Đề xuất KOC/KOL và tối ưu sản phẩm"],
     proofImage: "assets/03-studio-content-creator.jpg",
     proofAlt: "Không gian sản xuất nội dung và livestream cho TikTok Shop",
-    proofCaption: "Ảnh phù hợp vì thể hiện hoạt động sản xuất nội dung/livestream, không phải ảnh minh họa ngẫu nhiên.",
+    proofCaption: "Không gian sản xuất nội dung và livestream dành cho hoạt động bán hàng trên TikTok Shop.",
   },
   {
     slug: "design-website",
@@ -82,7 +82,7 @@ export const services = [
     fit: "Phù hợp với doanh nghiệp cần website giới thiệu, landing page chiến dịch, profile công ty hoặc hệ thống nhận diện đồng bộ.",
     deliverables: ["Sitemap và wireframe", "Thiết kế giao diện", "Nội dung theo cấu trúc chuyển đổi", "Bàn giao source/asset theo phạm vi dự án"],
     proofNote:
-      "Bộ ảnh hiện tại không có ảnh màn hình website hoặc thiết kế giao diện cụ thể, nên phần này ưu tiên mô tả quy trình thay vì dùng ảnh sai ngữ cảnh.",
+      "Mỗi website bắt đầu từ cấu trúc nội dung và hành trình người dùng, sau đó mới phát triển giao diện, nội dung chuyển đổi và hệ thống nhận diện đồng bộ.",
   },
   {
     slug: "content-marketing",
@@ -96,7 +96,7 @@ export const services = [
     deliverables: ["Content pillar", "Lịch nội dung", "Kịch bản video ngắn", "Bài PR hoặc bài quảng cáo theo chiến dịch"],
     proofImage: "assets/05-studio-behind-scenes.jpg",
     proofAlt: "Hậu trường sản xuất nội dung tại studio",
-    proofCaption: "Ảnh minh chứng liên quan đến quá trình chuẩn bị và sản xuất nội dung.",
+    proofCaption: "Quá trình chuẩn bị và sản xuất nội dung tại studio DST.",
   },
   {
     slug: "studio-media",
@@ -110,7 +110,7 @@ export const services = [
     deliverables: ["Kịch bản quay/chụp", "Shot list", "File ảnh/video đã hậu kỳ", "Phiên bản tối ưu cho nhiều nền tảng"],
     proofImage: "assets/06-media-commercial-production.jpg",
     proofAlt: "Bối cảnh sản xuất video thương mại",
-    proofCaption: "Ảnh thể hiện đúng hoạt động sản xuất media, phù hợp với nội dung dịch vụ.",
+    proofCaption: "Bối cảnh sản xuất video thương mại và tư liệu truyền thông chuyên nghiệp.",
   },
   {
     slug: "branding",
@@ -124,7 +124,7 @@ export const services = [
     deliverables: ["Định vị thương hiệu", "Thông điệp và tagline", "Moodboard nhận diện", "Hướng dẫn ứng dụng cơ bản"],
     proofImage: "assets/09-branding-workshop.jpg",
     proofAlt: "Workshop xây dựng thương hiệu",
-    proofCaption: "Ảnh phù hợp vì thể hiện hoạt động làm việc chiến lược và định hướng thương hiệu.",
+    proofCaption: "Workshop định vị và xây dựng định hướng thương hiệu cùng doanh nghiệp.",
   },
   {
     slug: "booking-pr",
@@ -138,7 +138,7 @@ export const services = [
     deliverables: ["Đề xuất kênh booking", "Thông điệp PR", "Kịch bản truyền thông", "Theo dõi và tổng hợp hiệu quả"],
     proofImage: "assets/07-media-event-production.jpg",
     proofAlt: "Sản xuất truyền thông tại sự kiện",
-    proofCaption: "Ảnh liên quan đến truyền thông sự kiện, phù hợp hơn ảnh stock hoặc minh họa chung chung.",
+    proofCaption: "Hoạt động sản xuất và truyền thông trực tiếp tại sự kiện.",
   },
   {
     slug: "setup-restaurant-hotel",
@@ -152,7 +152,7 @@ export const services = [
     deliverables: ["Khảo sát thị trường", "Concept thương hiệu", "Kế hoạch khai trương", "Lịch nội dung và quảng cáo vận hành"],
     proofImage: "assets/10-hotel-lobby-project.jpg",
     proofAlt: "Không gian dự án khách sạn",
-    proofCaption: "Ảnh phù hợp vì bối cảnh thuộc nhóm nhà hàng/khách sạn, đúng với dịch vụ setup hospitality.",
+    proofCaption: "Không gian dự án khách sạn trong nhóm dịch vụ setup hospitality.",
   },
   {
     slug: "phong-marketing",
@@ -165,7 +165,7 @@ export const services = [
     fit: "Phù hợp với doanh nghiệp đang tăng trưởng, có nhu cầu xây đội nội bộ nhưng thiếu quy trình và tiêu chuẩn triển khai.",
     deliverables: ["Sơ đồ vai trò nhân sự", "Quy trình làm việc", "Bộ KPI cơ bản", "Kế hoạch đào tạo và chuyển giao"],
     proofNote:
-      "Không dùng ảnh minh họa vì hạng mục này nên được chứng minh bằng quy trình, sơ đồ tổ chức và tài liệu chuyển giao.",
+      "Lộ trình tập trung vào cơ cấu nhân sự, quy trình phối hợp, hệ thống KPI và kế hoạch đào tạo để đội ngũ có thể tự vận hành lâu dài.",
   },
 ];
 

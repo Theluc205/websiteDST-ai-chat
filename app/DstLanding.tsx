@@ -54,7 +54,7 @@ function scrollToSection(id: string) {
 
 function openService(slug: string) {
   window.location.hash = `/dich-vu/${slug}`;
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 function BrandLogo({ variant = "group", className = "" }: { variant?: "group" | "media"; className?: string }) {
@@ -583,7 +583,6 @@ function LandingHome() {
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ delay: index * 0.08, duration: 0.5 }}
               >
-                <span className="project-index">{String(index + 1).padStart(2, "0")}</span>
                 <div>
                   <span>{project.type}</span>
                   <h3>{project.title}</h3>
@@ -728,23 +727,23 @@ function ServicePage({ service }: { service: ServiceItem }) {
   return (
     <>
       <header className="site-header is-scrolled service-page-header">
-        <a className="brand" href="#/" aria-label="Về trang chủ">
+        <a className="brand" href="#home" aria-label="Về trang chủ">
           <BrandLogo />
         </a>
         <nav className="desktop-nav" aria-label="Menu chính">
-          <a href="#/">Trang chủ</a>
-          <a href="#/">Giới thiệu</a>
-          <a href="#/">Dịch vụ</a>
-          <a href="#/">Dự án</a>
-          <a href="#/">Liên hệ</a>
+          <a href="#home">Trang chủ</a>
+          <a href="#about">Giới thiệu</a>
+          <a href="#services">Dịch vụ</a>
+          <a href="#projects">Dự án</a>
+          <a href="#contact">Liên hệ</a>
         </nav>
-        <a className="header-cta" href="#/">Nhận tư vấn</a>
+        <a className="header-cta" href="#contact">Nhận tư vấn</a>
       </header>
 
       <main className="service-page">
         <section className="service-page-hero">
           <div>
-            <a className="back-link" href="#/">← Tất cả dịch vụ</a>
+            <a className="back-link" href="#services">← Tất cả dịch vụ</a>
             <div className="service-page-icon"><Icon size={32} /></div>
             <p className="eyebrow">Dịch vụ DST Group</p>
             <h1>{service.title}</h1>
@@ -798,6 +797,38 @@ function ServicePage({ service }: { service: ServiceItem }) {
           </div>
         </section>
       </main>
+
+      <footer className="site-footer service-page-footer">
+        <div>
+          <BrandLogo variant="media" />
+          <p>Dịch vụ tận tâm - Nâng tầm thương hiệu.</p>
+        </div>
+        <div>
+          <h3>Điều hướng</h3>
+          <a href="#home">Trang chủ</a>
+          <a href="#about">Về chúng tôi</a>
+          <a href="#projects">Dự án</a>
+        </div>
+        <div>
+          <h3>Dịch vụ</h3>
+          {services.slice(0, 4).map((item) => (
+            <a href={`#/dich-vu/${item.slug}`} key={item.slug}>{item.title}</a>
+          ))}
+        </div>
+        <div>
+          <h3>Liên hệ</h3>
+          <a href="tel:0328247888">0328 247 888</a>
+          <a href="mailto:info@dstgroup.vn">info@dstgroup.vn</a>
+          <a href="https://zalo.me/0328247888" target="_blank" rel="noreferrer">Zalo</a>
+        </div>
+        <p className="copyright">© DST Group. Dịch vụ tận tâm - Nâng tầm thương hiệu.</p>
+      </footer>
+
+      <div className="floating-actions">
+        <a href="tel:0328247888" aria-label="Gọi DST Group"><Phone size={20} /></a>
+        <a href="https://zalo.me/0328247888" aria-label="Liên hệ Zalo DST Group">Zalo</a>
+        <a href="#home" aria-label="Về trang chủ">↑</a>
+      </div>
       <AiConsultantChat />
     </>
   );
@@ -812,6 +843,14 @@ export function DstLanding() {
     window.addEventListener("hashchange", updateHash);
     return () => window.removeEventListener("hashchange", updateHash);
   }, []);
+
+  useEffect(() => {
+    if (hash.startsWith("#/")) return;
+    const sectionId = hash.replace(/^#/, "") || "home";
+    window.requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView({ block: "start" });
+    });
+  }, [hash]);
 
   const match = hash.match(/^#\/dich-vu\/([a-z0-9-]+)$/);
   const service = match ? services.find((item) => item.slug === match[1]) : undefined;
