@@ -1,6 +1,7 @@
 interface Env {
-  GEMINI_API_KEY?: string;
-  GEMINI_MODEL?: string;
+  AI: {
+    run(model: string, input: { messages: Array<{ role: string; content: string }> }): Promise<{ response?: string }>;
+  };
 }
 
 type ChatMessage = {
@@ -54,37 +55,19 @@ function normalizeMessages(value: unknown): ChatMessage[] {
 }
 
 async function chat(request: Request, env: Env) {
-  if (!env.GEMINI_API_KEY) return json(request, { error: "AI is not configured" }, 503);
-
   const body = (await request.json().catch(() => null)) as { messages?: unknown } | null;
   const messages = normalizeMessages(body?.messages);
   if (!messages.length) return json(request, { error: "Missing messages" }, 400);
 
-  const model = env.GEMINI_MODEL || "gemini-2.5-flash";
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: DST_CONTEXT }] },
-        contents: messages.map((message) => ({
-          role: message.role === "assistant" ? "model" : "user",
-          parts: [{ text: message.content }],
-        })),
-        generationConfig: { temperature: 0.4, maxOutputTokens: 420 },
-      }),
-    },
-  );
-
-  if (!response.ok) {
-    return json(request, { error: "AI provider failed", providerStatus: response.status }, 502);
+  let answer: string | undefined;
+  try {
+    const result = await env.AI.run("@cf/zai-org/glm-4.7-flash", {
+      messages: [{ role: "system", content: DST_CONTEXT }, ...messages],
+    });
+    answer = result.response?.trim();
+  } catch (error) {
+    return json(request, { error: "AI provider failed" }, 502);
   }
-
-  const data = (await response.json()) as {
-    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
-  };
-  const answer = data.candidates?.[0]?.content?.parts?.map((part) => part.text ?? "").join("").trim();
 
   return answer
     ? json(request, { answer })
