@@ -54,8 +54,9 @@ export const services = [
       "DST xây dựng cấu trúc chiến dịch theo mục tiêu kinh doanh: nhận diện, khách hàng tiềm năng, chuyển đổi hoặc doanh thu. Dịch vụ tập trung vào đo lường, tối ưu ngân sách và báo cáo minh bạch.",
     fit: "Phù hợp với doanh nghiệp đã có sản phẩm, website/fanpage hoặc kênh bán hàng và cần tăng trưởng bằng quảng cáo có kiểm soát.",
     deliverables: ["Kế hoạch kênh và ngân sách", "Thông điệp quảng cáo", "Thiết lập tracking cơ bản", "Báo cáo hiệu quả định kỳ"],
-    proofNote:
-      "Mỗi chiến dịch được vận hành theo chu trình đo lường, phân tích dữ liệu, tối ưu ngân sách và báo cáo định kỳ để doanh nghiệp theo dõi hiệu quả rõ ràng.",
+    proofImage: "assets/service-digital-advertising.png",
+    proofAlt: "Hệ thống dữ liệu và tối ưu hiệu quả quảng cáo số",
+    proofCaption: "Hệ thống theo dõi dữ liệu, phân tích hiệu quả và tối ưu chiến dịch đa kênh.",
   },
   {
     slug: "tiktok-shop",
@@ -81,8 +82,9 @@ export const services = [
       "Dịch vụ tập trung vào trải nghiệm người dùng, cấu trúc nội dung, giao diện thương hiệu và khả năng chuyển đổi. Website/landing page được thiết kế theo mục tiêu bán hàng hoặc tuyển khách hàng tiềm năng.",
     fit: "Phù hợp với doanh nghiệp cần website giới thiệu, landing page chiến dịch, profile công ty hoặc hệ thống nhận diện đồng bộ.",
     deliverables: ["Sitemap và wireframe", "Thiết kế giao diện", "Nội dung theo cấu trúc chuyển đổi", "Bàn giao source/asset theo phạm vi dự án"],
-    proofNote:
-      "Mỗi website bắt đầu từ cấu trúc nội dung và hành trình người dùng, sau đó mới phát triển giao diện, nội dung chuyển đổi và hệ thống nhận diện đồng bộ.",
+    proofImage: "assets/service-design-website.png",
+    proofAlt: "Không gian thiết kế giao diện website đa thiết bị",
+    proofCaption: "Quy trình phát triển giao diện từ wireframe, hệ thống thiết kế đến phiên bản đa thiết bị.",
   },
   {
     slug: "content-marketing",
@@ -164,8 +166,9 @@ export const services = [
       "DST tư vấn cấu trúc phòng Marketing, vai trò nhân sự, quy trình phối hợp, KPI và cách đo lường để doanh nghiệp có thể tự vận hành lâu dài.",
     fit: "Phù hợp với doanh nghiệp đang tăng trưởng, có nhu cầu xây đội nội bộ nhưng thiếu quy trình và tiêu chuẩn triển khai.",
     deliverables: ["Sơ đồ vai trò nhân sự", "Quy trình làm việc", "Bộ KPI cơ bản", "Kế hoạch đào tạo và chuyển giao"],
-    proofNote:
-      "Lộ trình tập trung vào cơ cấu nhân sự, quy trình phối hợp, hệ thống KPI và kế hoạch đào tạo để đội ngũ có thể tự vận hành lâu dài.",
+    proofImage: "assets/service-marketing-team.png",
+    proofAlt: "Đội ngũ Marketing phối hợp xây dựng quy trình và kế hoạch",
+    proofCaption: "Đội ngũ phối hợp trên cùng hệ thống vai trò, quy trình, KPI và kế hoạch triển khai.",
   },
 ];
 
@@ -204,12 +207,12 @@ export const processSteps = [
 ] as const;
 
 export const reasons = [
-  "Đội ngũ trẻ, sáng tạo và giàu kinh nghiệm.",
-  "Giải pháp thiết kế riêng theo từng doanh nghiệp.",
-  "Báo cáo tiến độ rõ ràng và minh bạch.",
-  "Đồng hành xuyên suốt trước, trong và sau dự án.",
-  "Hệ sinh thái dịch vụ Marketing toàn diện.",
-  "Tập trung vào hiệu quả thực tế và tăng trưởng dài hạn.",
+  { icon: Sparkles, text: "Đội ngũ trẻ, sáng tạo và giàu kinh nghiệm." },
+  { icon: Target, text: "Giải pháp thiết kế riêng theo từng doanh nghiệp." },
+  { icon: BarChart3, text: "Báo cáo tiến độ rõ ràng và minh bạch." },
+  { icon: Handshake, text: "Đồng hành xuyên suốt trước, trong và sau dự án." },
+  { icon: Blocks, text: "Hệ sinh thái dịch vụ Marketing toàn diện." },
+  { icon: Rocket, text: "Tập trung vào hiệu quả thực tế và tăng trưởng dài hạn." },
 ];
 
 export const projects = [

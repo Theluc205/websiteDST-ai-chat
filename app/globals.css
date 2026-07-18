@@ -355,6 +355,14 @@ h2 span {
   color: var(--accent-bright);
 }
 
+h1 span {
+  background: linear-gradient(90deg, var(--accent-bright), #f2cf63, var(--jade-soft), #ef8b63, var(--accent-bright));
+  background-size: 240% 100%;
+  background-clip: text;
+  color: transparent;
+  animation: headlineColorFlow 7s ease-in-out infinite;
+}
+
 h2 {
   font-family: var(--font-display);
   font-weight: 700;
@@ -799,7 +807,11 @@ h3 {
   border: 1px solid color-mix(in srgb, var(--card-accent) 45%, transparent);
   border-radius: 12px;
   background: color-mix(in srgb, var(--card-accent) 16%, transparent);
+  animation: serviceIconFloat 4.8s ease-in-out infinite;
 }
+
+.service-card:nth-child(2n) .service-icon-wrap { animation-delay: -1.6s; }
+.service-card:nth-child(3n) .service-icon-wrap { animation-delay: -3.2s; }
 
 .service-icon {
   margin: 0;
@@ -985,6 +997,8 @@ h3 {
 }
 
 .reason-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   gap: 14px;
   min-height: 120px;
@@ -992,8 +1006,40 @@ h3 {
   border-radius: var(--radius);
 }
 
-.reason-card svg {
+.reason-card::before {
+  position: absolute;
+  top: 0;
+  left: -45%;
+  width: 45%;
+  height: 2px;
+  content: "";
+  background: linear-gradient(90deg, transparent, var(--accent-bright), var(--jade-soft), #ef8b63, transparent);
+  animation: reasonColorSweep 5s ease-in-out infinite;
+}
+
+.reason-icon {
+  display: grid;
   flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(232, 184, 74, 0.35);
+  border-radius: 8px;
+  background: rgba(232, 184, 74, 0.08);
+  color: var(--accent-bright);
+  animation: serviceIconFloat 4.2s ease-in-out infinite;
+}
+
+.reason-card:nth-child(2n) .reason-icon {
+  border-color: rgba(77, 182, 169, 0.38);
+  background: rgba(77, 182, 169, 0.09);
+  color: var(--jade-soft);
+}
+
+.reason-card:nth-child(3n) .reason-icon {
+  border-color: rgba(239, 139, 99, 0.38);
+  background: rgba(239, 139, 99, 0.09);
+  color: #ef8b63;
 }
 
 .project-section {
@@ -1013,7 +1059,7 @@ h3 {
 
 .project-card {
   position: relative;
-  min-height: 360px;
+  min-height: 420px;
   overflow: hidden;
   border: 1px solid rgba(26, 74, 92, 0.12);
   border-radius: 24px;
@@ -1040,6 +1086,18 @@ h3 {
   color: #f5f8fa;
 }
 
+.project-overlay > * {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.project-overlay h3 {
+  line-height: 1.25;
+}
+
 .project-overlay span {
   color: var(--gold-soft);
   font-size: 0.8rem;
@@ -1049,6 +1107,7 @@ h3 {
 .project-overlay p,
 .project-overlay strong {
   color: rgba(245, 248, 250, 0.9);
+  line-height: 1.45;
 }
 
 .clients-section {
@@ -2270,7 +2329,7 @@ textarea {
   }
 
   .project-card {
-    min-height: 330px;
+    min-height: 390px;
   }
 
   .final-cta {
@@ -2407,6 +2466,7 @@ textarea {
   place-items: center;
   border: 1px solid rgba(232, 184, 74, 0.38);
   color: var(--accent-bright);
+  animation: serviceIconFloat 4.2s ease-in-out infinite;
 }
 
 .service-page h1 {
@@ -2424,10 +2484,22 @@ textarea {
 }
 
 .service-page-image, .service-page-note {
+  position: relative;
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--surface);
+}
+
+.service-page-image::before {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  height: 4px;
+  content: "";
+  background: linear-gradient(90deg, var(--accent-bright), var(--jade-soft), #ef8b63, var(--accent-bright));
+  background-size: 220% 100%;
+  animation: headlineColorFlow 6s linear infinite;
 }
 
 .service-page-image img {
@@ -2435,6 +2507,12 @@ textarea {
   width: 100%;
   min-height: 360px;
   object-fit: cover;
+  transition: transform 0.7s ease, filter 0.7s ease;
+}
+
+.service-page-image:hover img {
+  filter: saturate(1.12);
+  transform: scale(1.035);
 }
 
 .service-page-image figcaption, .service-page-note {
@@ -2529,6 +2607,27 @@ textarea {
   .service-page-cta h2 { font-size: 2rem; }
   .service-page-header .header-cta { display: inline-flex; min-height: 44px; padding-inline: 16px; }
   .service-directory a:nth-child(odd), .service-directory a:nth-child(even) { padding-left: 0; padding-right: 0; }
+}
+
+@keyframes serviceIconFloat {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(232, 184, 74, 0);
+  }
+  50% {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 24px rgba(77, 182, 169, 0.16);
+  }
+}
+
+@keyframes headlineColorFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes reasonColorSweep {
+  0%, 15% { transform: translateX(0); }
+  55%, 100% { transform: translateX(330%); }
 }
 
 

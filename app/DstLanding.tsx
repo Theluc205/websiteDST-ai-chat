@@ -400,7 +400,7 @@ function LandingHome() {
           >
             <p className="eyebrow">MARKETING • MEDIA • BRANDING</p>
             <h1>
-              Marketing đúng hướng, thương hiệu <span>tăng trưởng</span>
+              Marketing đúng hướng, <span>tăng trưởng bền vững</span>
             </h1>
             <p className="hero-desc">
               DST Group đồng hành cùng doanh nghiệp từ chiến lược, nội dung, quảng cáo đến Media và Branding. Mỗi kế hoạch
@@ -496,7 +496,7 @@ function LandingHome() {
           <div className="package-inner reveal">
             <div>
               <p className="eyebrow dark">Giải pháp trọn gói</p>
-              <h2>Một đội Marketing chuyên nghiệp, chi phí tối ưu</h2>
+              <h2>Marketing chuyên nghiệp, chi phí tối ưu</h2>
             </div>
             <button className="dark-btn" onClick={() => scrollToSection("contact")}>
               Yêu cầu báo giá
@@ -549,22 +549,25 @@ function LandingHome() {
         <section className="section reasons-section">
           <div className="section-heading reveal">
             <p className="eyebrow">Tại sao chọn DST Group</p>
-            <h2>Đối tác tăng trưởng đáng tin cậy</h2>
+            <h2>Vì sao chọn DST?</h2>
           </div>
           <div className="reason-grid">
-            {reasons.map((reason, index) => (
-              <motion.article
-                className="reason-card"
-                key={reason}
-                initial={reduce ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: index * 0.06, duration: 0.4 }}
-              >
-                <CheckIcon size={22} />
-                <p>{reason}</p>
-              </motion.article>
-            ))}
+            {reasons.map((reason, index) => {
+              const ReasonIcon = reason.icon;
+              return (
+                <motion.article
+                  className="reason-card"
+                  key={reason.text}
+                  initial={reduce ? false : { opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ delay: index * 0.06, duration: 0.4 }}
+                >
+                  <div className="reason-icon"><ReasonIcon size={24} /></div>
+                  <p>{reason.text}</p>
+                </motion.article>
+              );
+            })}
           </div>
         </section>
 
@@ -573,22 +576,23 @@ function LandingHome() {
             <p className="eyebrow">Dự án tiêu biểu</p>
             <h2>Dấu ấn triển khai</h2>
           </div>
-          <div className="project-list">
+          <div className="project-rail">
             {projects.map((project, index) => (
               <motion.article
-                className="project-row"
+                className="project-card"
                 key={project.title}
                 initial={reduce ? false : { opacity: 0, x: 40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ delay: index * 0.08, duration: 0.5 }}
               >
-                <div>
+                <img src={project.img} alt={project.title} loading="lazy" decoding="async" />
+                <div className="project-overlay">
                   <span>{project.type}</span>
                   <h3>{project.title}</h3>
+                  <p>{project.goal}</p>
+                  <strong>{project.result}</strong>
                 </div>
-                <p>{project.goal}</p>
-                <strong>{project.result}</strong>
               </motion.article>
             ))}
           </div>
@@ -722,7 +726,7 @@ function LandingHome() {
 
 function ServicePage({ service }: { service: ServiceItem }) {
   const Icon = service.icon;
-  const hasImage = "proofImage" in service && service.proofImage;
+  const reduce = useReducedMotion();
 
   return (
     <>
@@ -752,14 +756,15 @@ function ServicePage({ service }: { service: ServiceItem }) {
               {service.tags.map((tag) => <span key={tag}>{tag}</span>)}
             </div>
           </div>
-          {hasImage ? (
-            <figure className="service-page-image">
-              <img src={service.proofImage} alt={service.proofAlt} />
-              <figcaption>{service.proofCaption}</figcaption>
-            </figure>
-          ) : (
-            <div className="service-page-note">{service.proofNote}</div>
-          )}
+          <motion.figure
+            className="service-page-image"
+            initial={reduce ? false : { opacity: 0, x: 34, scale: 0.97 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <img src={service.proofImage} alt={service.proofAlt} loading="lazy" decoding="async" />
+            <figcaption>{service.proofCaption}</figcaption>
+          </motion.figure>
         </section>
 
         <section className="service-page-grid">
