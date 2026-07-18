@@ -1,6 +1,9 @@
 interface Env {
   AI: {
-    run(model: string, input: { messages: Array<{ role: string; content: string }> }): Promise<{ response?: string }>;
+    run(model: string, input: { messages: Array<{ role: string; content: string }> }): Promise<{
+      response?: string;
+      choices?: Array<{ message?: { content?: string } }>;
+    }>;
   };
 }
 
@@ -59,19 +62,22 @@ async function chat(request: Request, env: Env) {
   const messages = normalizeMessages(body?.messages);
   if (!messages.length) return json(request, { error: "Missing messages" }, 400);
 
-  let answer: string | undefined;
   try {
-    const result = await env.AI.run("@cf/zai-org/glm-4.7-flash", {
-      messages: [{ role: "system", content: DST_CONTEXT }, ...messages],
-    });
-    answer = result.response?.trim();
+    const conversation = [{ role: "system", content: DST_CONTEXT }, ...messages];
+    let result = await env.AI.run("@cf/zai-org/glm-4.7-flash", { messages: conversation });
+    let answer = result.response?.trim() ?? result.choices?.[0]?.message?.content?.trim();
+
+    if (!answer) {
+      result = await env.AI.run("@cf/zai-org/glm-4.7-flash", { messages: conversation });
+      answer = result.response?.trim() ?? result.choices?.[0]?.message?.content?.trim();
+    }
+
+    return answer
+      ? json(request, { answer })
+      : json(request, { error: "AI returned no answer" }, 502);
   } catch (error) {
     return json(request, { error: "AI provider failed" }, 502);
   }
-
-  return answer
-    ? json(request, { answer })
-    : json(request, { error: "AI returned no answer" }, 502);
 }
 
 export default {
