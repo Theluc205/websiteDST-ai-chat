@@ -239,7 +239,7 @@ p { margin: 0; }
 .client-section { padding: 32px 0; border-block: 1px solid var(--dst-line); background: var(--dst-paper); }
 .client-section .eyebrow { margin-bottom: 16px; }
 .client-list { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid var(--dst-line); border-radius: var(--radius); background: var(--dst-line); }
-.client-partner { position: relative; display: grid; min-height: 102px; overflow: hidden; padding: 16px 10px; place-items: center; isolation: isolate; background: var(--dst-paper); color: #607372; font-size: 0.92rem; font-weight: 800; text-align: center; transition: background 180ms ease, color 180ms ease; }
+.client-partner { position: relative; display: grid; min-height: 102px; overflow: hidden; padding: 16px 10px; place-items: center; isolation: isolate; background: var(--dst-paper); color: #607372; font-size: 0.92rem; font-weight: 800; text-align: center; text-decoration: none; transition: background 180ms ease, color 180ms ease; }
 .client-partner > span { position: relative; z-index: 2; white-space: nowrap; }
 .client-partner.has-image { color: var(--dst-paper); }
 .client-partner.has-image::after { position: absolute; z-index: 1; inset: 0; content: ""; background: linear-gradient(180deg, rgba(18, 54, 56, 0.1), rgba(18, 54, 56, 0.72)); }
@@ -247,6 +247,8 @@ p { margin: 0; }
 .client-partner:hover { background: #fff; color: var(--dst-deep); }
 .client-partner.has-image:hover { color: white; }
 .client-partner:hover img { transform: scale(1.05); }
+.client-partner[href] { cursor: pointer; }
+.client-partner:focus-visible { z-index: 3; outline: 3px solid var(--dst-orange); outline-offset: -3px; }
 .cta-section { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 42px; align-items: center; margin-top: 72px; margin-bottom: 72px; padding: 44px; border: 1px solid rgba(228, 155, 56, 0.48); border-radius: var(--radius); background: linear-gradient(100deg, var(--dst-deep) 0%, #24565a 65%, #e7b05a 160%); color: var(--dst-cream); box-shadow: var(--dst-shadow); }
 .cta-section h2 { max-width: 670px; margin-bottom: 14px; color: var(--dst-cream); }
 .cta-section > div > p:not(.eyebrow) { max-width: 690px; color: #d7e5e2; }
