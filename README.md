@@ -28,15 +28,18 @@ npm test
 
 - `npm run build`: kiểm tra ứng dụng Vinext/Worker.
 - `npm run build:github-pages`: tạo static routes, `404.html` fallback, `sitemap.xml`, `robots.txt` và `.nojekyll` trong `outputs/gh-pages-dist`.
-- `npm test`: kiểm tra type, build, các route công khai, SEO cơ bản, fallback GitHub Pages và việc không để AI key trong frontend.
+- `npm test`: kiểm tra type, build, các route công khai, SEO cơ bản, fallback GitHub Pages và hợp đồng tích hợp Messenger.
 
-## Cấu hình AI Chat
+## Facebook Messenger
 
-AI Chat không lưu API key trong trình duyệt. Widget gửi yêu cầu tới một proxy backend/Cloudflare Worker, sau đó tự chuyển sang tư vấn dựa trên dữ liệu dịch vụ nếu API không khả dụng.
+Website nhúng giao diện nhắn tin thật của Page DST Group bằng Facebook Page Plugin, tab `messages`:
 
-- Vinext: cấu hình `OPENAI_API_KEY` hoặc `GEMINI_API_KEY` trong biến môi trường của Worker, không commit `.env`.
-- GitHub Pages: đặt URL proxy trong `gh-pages-static/index.html` tại `window.__DST_CHAT_CONFIG__.apiUrl`.
-- Worker AI độc lập: xem `ai-chat-worker/src/index.ts`; origin production được giới hạn tới `https://theluc205.github.io` và localhost cho phát triển.
+- Page: `https://www.facebook.com/profile.php?id=61592072642755`
+- Mở trực tiếp: `https://m.me/61592072642755`
+- Nội dung Facebook chỉ được tải sau khi khách bấm mở chat.
+- Khách cần đăng nhập Facebook để nhắn ngay trong khung website; liên kết `m.me` luôn được giữ làm phương án dự phòng.
+
+Website không cần và không được chứa Page Access Token, App Secret, Gemini key hoặc cookie Facebook. Bot trả lời là bot đang kết nối với chính Page DST Group trên Messenger.
 
 ## Cấu hình form
 
