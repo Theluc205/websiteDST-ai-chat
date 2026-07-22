@@ -41,7 +41,11 @@ export function HomePage({ onNavigate, onOpenChat }: PageProps) {
           <Reveal className="hero-brand-stage">
             <span className="brand-line brand-line-one" aria-hidden="true" />
             <span className="brand-line brand-line-two" aria-hidden="true" />
-            <div className="hero-brand-logo"><BrandLogo variant="media" priority /></div>
+            <span className="brand-orbit brand-orbit-one" aria-hidden="true" />
+            <span className="brand-orbit brand-orbit-two" aria-hidden="true" />
+            <div className="hero-brand-card-motion">
+              <div className="hero-brand-logo"><BrandLogo variant="media" priority /></div>
+            </div>
             <span className="brand-tag tag-top">ADS</span>
             <span className="brand-tag tag-bottom">BRANDING</span>
           </Reveal>
